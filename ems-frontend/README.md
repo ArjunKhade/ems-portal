@@ -1,59 +1,184 @@
-# EmsFrontend
+# 🚀 Employee Management System
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.2.
+A modern **Employee Management System (EMS)** built with a clean UI, responsive design, and full-stack architecture. This application helps organizations efficiently manage employees, attendance, leaves, and company insights.
 
-## Development server
+---
 
-To start a local development server, run:
+## 📌 Features
+
+### 🔐 Authentication
+
+* Secure Sign In / Sign Up
+* Google SSO integration
+* Role-based access control
+
+### 👨‍💼 Employee Management
+
+* Add, update, delete employees
+* View employee profiles
+* Search & filter functionality
+
+### 📊 Dashboard
+
+* Overview of total employees, departments, and stats
+* Attendance summary
+* Leave analytics
+* Performance insights
+
+### 🕒 Attendance Management
+
+* Mark daily attendance
+* Track working hours
+* Attendance history
+
+### 📝 Leave Management
+
+* Apply for leave
+* Approve / reject requests (Admin)
+* Leave calendar view
+
+### 📱 PWA Mobile Support
+
+* Fully responsive design
+* Mobile-friendly interface
+* Installable as a Progressive Web App (PWA)
+
+### 📈 Reports & Analytics
+
+* Department-wise reports
+* Attendance trends
+* Company growth charts
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* Angular
+* TypeScript
+* HTML5 / CSS3
+* Angular Material
+* RxJS
+
+### Backend
+
+* Spring Boot
+* Java
+* REST APIs
+
+### Database
+
+* MySQL / PostgreSQL (configurable)
+
+---
+
+## 📂 Project Structure
+
+```
+employee-management-system/
+│
+├── frontend/        # Angular Application
+├── backend/         # Spring Boot APIs
+├── docs/            # Documentation & Screenshots
+└── README.md
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 🔹 Clone the Repository
 
 ```bash
+git clone https://github.com/your-username/employee-management-system.git
+cd employee-management-system
+```
+
+---
+
+### 🔹 Frontend Setup (Angular)
+
+```bash
+cd frontend
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+App will run at: `http://localhost:4200`
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 🔹 Backend Setup (Spring Boot)
 
 ```bash
-ng generate --help
+cd backend
+mvn clean install
+mvn spring-boot:run
 ```
 
-## Building
+API will run at: `http://localhost:8080`
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## 🔗 API Endpoints (Sample)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+| Method | Endpoint        | Description            |
+| ------ | --------------- | ---------------------- |
+| GET    | /employees      | Get all employees      |
+| POST   | /employees      | Add new employee       |
+| PUT    | /employees/{id} | Update employee        |
+| DELETE | /employees/{id} | Delete employee        |
+| GET    | /attendance     | Get attendance records |
+| POST   | /leave/apply    | Apply for leave        |
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## 📸 Screenshots
 
-```bash
-ng test
-```
+* Login & Registration UI
+* Admin Dashboard
+* Employee List
+* Attendance Panel
+* Leave Management
+* Mobile (PWA) Screens
 
-## Running end-to-end tests
+*(Add screenshots here from your project)*
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
+## 🚧 Future Enhancements
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+* Payroll Management
+* Notifications & Email Integration
+* Role-based dashboards
+* AI-based employee insights
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🤝 Contributing
+
+Contributions are welcome!
+Feel free to fork the repo and submit a pull request.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👨‍💻 Author
+
+**Arjun Khade**
+
+* Angular Developer | Full Stack Enthusiast
+
+---
+
+## ⭐ Support
+
+If you like this project, give it a ⭐ on GitHub!
+
+---
