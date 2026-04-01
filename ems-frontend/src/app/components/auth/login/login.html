@@ -1,0 +1,83 @@
+<div class="min-h-screen flex items-center justify-center
+            bg-gradient-to-br from-slate-100 via-white to-slate-200">
+
+    <div class="w-full max-w-md p-8 rounded-2xl
+              bg-white/70 backdrop-blur-xl border border-slate-200
+              shadow-xl text-slate-800">
+
+        <!-- Logo -->
+        <div class="w-10 h-10 flex items-center justify-center
+                rounded-xl bg-cyan-500 text-white mb-4 font-bold">
+            E
+        </div>
+
+        <!-- Title -->
+        <h2 class="text-2xl font-semibold text-slate-900">EMS <span class="text-cyan-500">Portal</span></h2>
+        <p class="text-slate-500 text-sm mb-6">
+            Sign in to continue
+        </p>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+            <!-- Email -->
+            <mat-form-field floatLabel="always" appearance="outline" class="w-full mb-4 custom-field-light">
+
+                <mat-label>Email Address</mat-label>
+                <input matInput formControlName="email" />
+            </mat-form-field>
+
+            <!-- Password -->
+            <mat-form-field floatLabel="always" appearance="outline" class="w-full mb-2 custom-field-light">
+
+                <mat-label>Password</mat-label>
+
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" />
+
+                <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
+                    <mat-icon class="text-slate-500">
+                        {{ hide ? 'visibility_off' : 'visibility' }}
+                    </mat-icon>
+                </button>
+
+            </mat-form-field>
+
+            <!-- Forgot -->
+            <div class="text-right mb-4">
+                <a href="#" class="text-cyan-600 text-xs hover:underline">
+                    Forgot password?
+                </a>
+            </div>
+
+            <!-- Login Button -->
+            <button mat-raised-button class="w-full !rounded-lg !py-2
+               !bg-gradient-to-r !from-cyan-500 !to-blue-500
+               !text-white !font-medium" [disabled]="loginForm.invalid">
+
+                Sign In
+            </button>
+
+            <!-- Divider -->
+            <div class="flex items-center my-4">
+                <div class="flex-1 h-px bg-slate-300"></div>
+                <span class="px-2 text-xs text-slate-400">OR</span>
+                <div class="flex-1 h-px bg-slate-300"></div>
+            </div>
+
+            <!-- SSO -->
+            <button mat-stroked-button class="w-full !border-slate-300 !text-slate-700 !rounded-lg">
+
+                <mat-icon class="mr-2">account_circle</mat-icon>
+                Continue with SSO
+            </button>
+
+            <!-- Signup Redirect -->
+            <div class="text-center mt-4 text-sm text-slate-500">
+                No account?
+                <a routerLink="/signup" class="text-cyan-600 font-medium hover:underline ml-1">
+                    Create one
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
