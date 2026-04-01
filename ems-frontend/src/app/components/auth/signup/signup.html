@@ -1,0 +1,80 @@
+<div class="min-h-screen flex items-center justify-center
+            bg-gradient-to-br from-slate-100 via-white to-slate-200">
+
+    <div class="w-full max-w-md p-8 rounded-2xl
+              bg-white/70 backdrop-blur-xl border border-slate-200
+              shadow-xl text-slate-800">
+
+        <!-- Logo -->
+        <div class="w-10 h-10 flex items-center justify-center
+                rounded-xl bg-cyan-500 text-white  mb-4 font-bold">
+            E
+        </div>
+
+        <!-- Title -->
+        <h2 class="text-lg font-semibold">
+            EMS <span class="text-cyan-400">Portal</span>
+        </h2>
+
+        <h3 class="text-2xl font-semibold mt-4">Create account</h3>
+        <p class="text-slate-400 text-sm mb-6">
+            Join your organization
+        </p>
+
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+            <!-- Name Row -->
+            <div class="grid grid-cols-2 gap-3 mb-4">
+
+                <mat-form-field floatLabel="always" appearance="outline" class="custom-field-light">
+                    <mat-label>First Name</mat-label>
+                    <input matInput formControlName="firstName" />
+                </mat-form-field>
+
+                <mat-form-field floatLabel="always" appearance="outline" class="custom-field-light">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput formControlName="lastName" />
+                </mat-form-field>
+
+            </div>
+
+            <!-- Email -->
+            <mat-form-field floatLabel="always" appearance="outline" class="w-full mb-4 custom-field-light">
+
+                <mat-label>Work Email</mat-label>
+                <input matInput formControlName="email" />
+            </mat-form-field>
+
+            <!-- Employee ID -->
+            <mat-form-field floatLabel="always" appearance="outline" class="w-full mb-4 custom-field-light">
+
+                <mat-label>Employee ID</mat-label>
+                <input matInput formControlName="employeeId" />
+            </mat-form-field>
+
+            <!-- Password -->
+            <mat-form-field floatLabel="always" appearance="outline" class="w-full mb-6 custom-field-light">
+
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password" />
+            </mat-form-field>
+
+            <!-- Submit -->
+            <button mat-raised-button class="w-full !rounded-lg !py-2
+               !bg-gradient-to-r !from-cyan-500 !to-blue-500
+               !text-white !font-medium">
+
+                Create Account →
+            </button>
+
+            <!-- Footer -->
+            <div class="text-center mt-4 text-sm text-slate-400">
+                Have an account?
+                <a routerLink="/login" class="text-cyan-400 hover:underline ml-1">
+                    Sign in
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
