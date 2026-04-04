@@ -1,0 +1,152 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white/70 backdrop-blur-xl border-r border-slate-200 p-5">
+
+    <!-- Logo -->
+    <div class="flex items-center gap-3 mb-8">
+      <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-cyan-500 text-white font-bold">
+        E
+      </div>
+      <h2 class="text-lg font-semibold">EMS Admin</h2>
+    </div>
+
+    <!-- Menu -->
+    <nav class="space-y-2 text-sm">
+      <a class="block px-3 py-2 rounded-lg bg-cyan-100 text-cyan-600 font-medium">
+        Dashboard
+      </a>
+      <a class="block px-3 py-2 rounded-lg hover:bg-slate-100">
+        Employees
+      </a>
+      <a class="block px-3 py-2 rounded-lg hover:bg-slate-100">
+        Departments
+      </a>
+      <a class="block px-3 py-2 rounded-lg hover:bg-slate-100">
+        Attendance
+      </a>
+      <a class="block px-3 py-2 rounded-lg hover:bg-slate-100">
+        Payroll
+      </a>
+    </nav>
+
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-semibold text-slate-800">Employees</h1>
+
+      <div class="flex items-center gap-3">
+        <input type="text"
+          placeholder="Search..."
+          class="px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+
+        <button class="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+          + Add Employee
+        </button>
+      </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="bg-white/70 backdrop-blur-xl border border-slate-200 rounded-2xl shadow p-4">
+
+      <!-- Filters -->
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex gap-2 text-sm">
+          <span class="px-3 py-1 rounded-full bg-cyan-100 text-cyan-600">All</span>
+          <span class="px-3 py-1 rounded-full bg-slate-100">Active</span>
+          <span class="px-3 py-1 rounded-full bg-slate-100">On Leave</span>
+        </div>
+
+        <select class="px-3 py-2 border rounded-lg text-sm">
+          <option>All Departments</option>
+        </select>
+      </div>
+
+      <!-- Table -->
+      <table class="w-full text-sm text-left">
+        <thead class="text-slate-500 border-b">
+          <tr>
+            <th class="py-2">Employee</th>
+            <th>ID</th>
+            <th>Department</th>
+            <th>Position</th>
+            <th>Status</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody class="text-slate-700">
+
+          <!-- Row -->
+          <tr class="border-b hover:bg-slate-50">
+            <td class="py-3 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center text-xs">
+                AK
+              </div>
+              <div>
+                <p class="font-medium">Alex Kumar</p>
+                <p class="text-xs text-slate-400">alex@company.com</p>
+              </div>
+            </td>
+            <td>EMP-001</td>
+            <td>Engineering</td>
+            <td>Developer</td>
+            <td>
+              <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-600">
+                Active
+              </span>
+            </td>
+            <td class="text-right space-x-2">
+              <button class="text-cyan-600 text-sm">View</button>
+              <button class="text-slate-500 text-sm">Edit</button>
+            </td>
+          </tr>
+
+          <!-- Row -->
+          <tr class="border-b hover:bg-slate-50">
+            <td class="py-3 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center text-xs">
+                SM
+              </div>
+              <div>
+                <p class="font-medium">Sara Mehta</p>
+                <p class="text-xs text-slate-400">sara@company.com</p>
+              </div>
+            </td>
+            <td>EMP-002</td>
+            <td>Design</td>
+            <td>UI/UX Lead</td>
+            <td>
+              <span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-600">
+                On Leave
+              </span>
+            </td>
+            <td class="text-right space-x-2">
+              <button class="text-cyan-600 text-sm">View</button>
+              <button class="text-slate-500 text-sm">Edit</button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <div class="flex justify-between items-center mt-4 text-sm text-slate-500">
+        <span>Showing 1–10 of 100</span>
+
+        <div class="flex gap-2">
+          <button class="px-3 py-1 border rounded-lg">Prev</button>
+          <button class="px-3 py-1 bg-cyan-500 text-white rounded-lg">1</button>
+          <button class="px-3 py-1 border rounded-lg">2</button>
+          <button class="px-3 py-1 border rounded-lg">Next</button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
