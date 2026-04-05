@@ -98,4 +98,8 @@ export class Dashboard implements OnInit {
   );
 }
 
+get PageEnd(): number{
+  return Math.min(this.Start + this.PAGE_SIZE, this.TotalEmployee);
+}
+
 }
