@@ -40,8 +40,7 @@
       <h1 class="text-2xl font-semibold text-slate-800">Employees</h1>
 
       <div class="flex items-center gap-3">
-        <input type="text"
-          placeholder="Search..."
+        <input type="text" placeholder="Search..."
           class="px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
 
         <button class="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
@@ -82,19 +81,21 @@
         <tbody class="text-slate-700">
 
           <!-- Row -->
+
+          @for(emp of paginatedEmployees; track emp.id){
           <tr class="border-b hover:bg-slate-50">
             <td class="py-3 flex items-center gap-3">
               <div class="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center text-xs">
-                AK
+                {{'AK'}}
               </div>
               <div>
-                <p class="font-medium">Alex Kumar</p>
+                <p class="font-medium">{{emp?.name}}</p>
                 <p class="text-xs text-slate-400">alex@company.com</p>
               </div>
             </td>
-            <td>EMP-001</td>
-            <td>Engineering</td>
-            <td>Developer</td>
+            <td>{{emp?.id}}</td>
+            <td>{{emp?.department}}</td>
+            <td>{{emp?.location}}</td>
             <td>
               <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-600">
                 Active
@@ -103,46 +104,34 @@
             <td class="text-right space-x-2">
               <button class="text-cyan-600 text-sm">View</button>
               <button class="text-slate-500 text-sm">Edit</button>
+              <button class="text-slate-500 text-sm">Delete</button>
             </td>
           </tr>
-
-          <!-- Row -->
-          <tr class="border-b hover:bg-slate-50">
-            <td class="py-3 flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center text-xs">
-                SM
-              </div>
-              <div>
-                <p class="font-medium">Sara Mehta</p>
-                <p class="text-xs text-slate-400">sara@company.com</p>
-              </div>
-            </td>
-            <td>EMP-002</td>
-            <td>Design</td>
-            <td>UI/UX Lead</td>
-            <td>
-              <span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-600">
-                On Leave
-              </span>
-            </td>
-            <td class="text-right space-x-2">
-              <button class="text-cyan-600 text-sm">View</button>
-              <button class="text-slate-500 text-sm">Edit</button>
-            </td>
-          </tr>
+          }
 
         </tbody>
       </table>
 
       <!-- Pagination -->
       <div class="flex justify-between items-center mt-4 text-sm text-slate-500">
-        <span>Showing 1–10 of 100</span>
+        <span>Showing {{Start + 1}}–{{End}} of {{TotalEmployee}}</span>
 
         <div class="flex gap-2">
-          <button class="px-3 py-1 border rounded-lg">Prev</button>
-          <button class="px-3 py-1 bg-cyan-500 text-white rounded-lg">1</button>
-          <button class="px-3 py-1 border rounded-lg">2</button>
-          <button class="px-3 py-1 border rounded-lg">Next</button>
+          <button (click)="goToPreviousPage()" [disabled]="currentSelectedPage === 0"
+            class="px-3 py-1 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+            Prev
+          </button>
+          @for (num of visiblePages; track num) {
+          <button (click)="onPageClick(num)" [class]="isPageActive(num) 
+            ? 'px-3 py-1 bg-cyan-500 text-white rounded-lg' 
+            : 'px-3 py-1 border rounded-lg'">
+            {{ num + 1 }}
+          </button>
+          }
+          <button (click)="goToNextPage()" [disabled]="currentSelectedPage >= NoOfPages.length - 1"
+            class="px-3 py-1 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+            Next
+          </button>
         </div>
       </div>
 
