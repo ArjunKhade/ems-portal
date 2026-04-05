@@ -41,15 +41,8 @@
             <!-- Email -->
             <mat-form-field floatLabel="always" appearance="outline" class="w-full mb-4 custom-field-light">
 
-                <mat-label>Work Email</mat-label>
+                <mat-label>Email</mat-label>
                 <input matInput formControlName="email" />
-            </mat-form-field>
-
-            <!-- Employee ID -->
-            <mat-form-field floatLabel="always" appearance="outline" class="w-full mb-4 custom-field-light">
-
-                <mat-label>Employee ID</mat-label>
-                <input matInput formControlName="employeeId" />
             </mat-form-field>
 
             <!-- Password -->
@@ -57,6 +50,25 @@
 
                 <mat-label>Password</mat-label>
                 <input matInput type="password" formControlName="password" />
+            </mat-form-field>
+
+            <!-- Phone -->
+            <mat-form-field floatLabel="always" appearance="outline" class="w-full mb-4 custom-field-light">
+
+                <mat-label>Phone</mat-label>
+                <input matInput formControlName="phone" />
+            </mat-form-field>
+
+            <!-- Role -->
+            <mat-form-field floatLabel="always" appearance="outline" class="w-full mb-4 custom-field-light">
+            <mat-label>Role</mat-label>
+
+            <mat-select formControlName="role">
+                <mat-option value="ROLE_CUSTOMER">Customer</mat-option>
+                <mat-option value="ROLE_ADMIN">Admin</mat-option>
+                <mat-option value="ROLE_USER">User</mat-option>
+            </mat-select>
+
             </mat-form-field>
 
             <!-- Submit -->
