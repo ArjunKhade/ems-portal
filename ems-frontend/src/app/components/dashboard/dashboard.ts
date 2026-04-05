@@ -21,6 +21,7 @@ export class Dashboard implements OnInit {
   PAGE_SIZE = 8;
   VISIBLE_PAGES = 20;
   currentSelectedPage: number = 0;
+  visibleStartIndex: number = 0;
 
   constructor(private route: ActivatedRoute) {}
 
@@ -63,16 +64,27 @@ export class Dashboard implements OnInit {
   }
 
   goToPreviousPage() {
-    if (this.currentSelectedPage > 0) {
-      this.currentSelectedPage--;
-    }
-  }
+  if (this.currentSelectedPage > 0) {
+    this.currentSelectedPage--;
 
-  goToNextPage() {
-    if (this.currentSelectedPage < this.NoOfPages.length - 1) {
-      this.currentSelectedPage++;
+    if (this.currentSelectedPage < this.visibleStartIndex) {
+      this.visibleStartIndex--;
     }
   }
+}
+
+ goToNextPage() {
+  if (this.currentSelectedPage < this.NoOfPages.length - 1) {
+    this.currentSelectedPage++;
+
+    if (
+      this.currentSelectedPage >=
+      this.visibleStartIndex + this.VISIBLE_PAGES
+    ) {
+      this.visibleStartIndex++;
+    }
+  }
+}
 
 
   /**
@@ -80,18 +92,10 @@ export class Dashboard implements OnInit {
    * Used to avoid rendering too many page buttons
    */
   get visiblePages(): number[] {
-  const total = this.NoOfPages.length;
-  const current = this.currentSelectedPage;
-
-  let start = Math.max(0, current - Math.floor(this.VISIBLE_PAGES / 2));
-  let end = start + this.VISIBLE_PAGES;
-
-  if (end > total) {
-    end = total;
-    start = Math.max(0, end - this.VISIBLE_PAGES);
-  }
-
-  return this.NoOfPages.slice(start, end);
+  return this.NoOfPages.slice(
+    this.visibleStartIndex,
+    this.visibleStartIndex + this.VISIBLE_PAGES
+  );
 }
 
 }
