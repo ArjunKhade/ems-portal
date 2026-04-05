@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { employeeResolver } from './components/resolvers/employee.resolver';
 
 export const routes: Routes = [
   {
@@ -12,6 +13,9 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () => import('./components/dashboard/dashboard').then((m) => m.Dashboard),
+     resolve: {
+      employees: employeeResolver
+    }
   },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
