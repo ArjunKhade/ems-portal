@@ -3,15 +3,19 @@ import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee/employee.service';
 import { Employee } from '../employee/employee.model';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
+import { UserAvatar } from "../user-avatar/user-avatar";
+import { User } from '../user-avatar/user.model';
+import { AuthService } from '../auth/auth-service';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, UserAvatar],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
+  standalone: true
 })
 export class Dashboard implements OnInit {
   employees: Employee[] = [];
@@ -29,7 +33,9 @@ export class Dashboard implements OnInit {
 
   private cdr = inject(ChangeDetectorRef);
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute,
+     private authService: AuthService,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.employees = this.route.snapshot.data['employees'];
@@ -50,6 +56,16 @@ export class Dashboard implements OnInit {
     this.applyFilter(value || '');
   });
 
+  }
+
+  get user(){
+    let user = null
+    try {
+      user = sessionStorage.getItem("User");
+    } catch (error) {
+      console.log("Error while getting user")
+    }
+    return user;
   }
 
   get TotalEmployee() {
@@ -152,6 +168,12 @@ applyFilter(searchTerm: string) {
 
 get PageEnd(): number{
   return Math.min(this.Start + this.PAGE_SIZE, this.TotalEmployee);
+}
+
+
+signOut(event:any){
+ this.authService.logout();
+ this.router.navigate(["login"]);
 }
 
 }
