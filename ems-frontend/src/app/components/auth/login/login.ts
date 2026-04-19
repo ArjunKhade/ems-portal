@@ -63,7 +63,7 @@ export class Login {
         },
         error: (e) =>{
           console.log(e.error?.message)
-          this.toastr.error(e.error?.message, 'Error');
+          this.toastr.error(e.error, 'Error');
         }
       })
 
