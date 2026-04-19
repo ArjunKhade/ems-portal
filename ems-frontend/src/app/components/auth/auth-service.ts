@@ -20,5 +20,9 @@ export class AuthService {
    return this.http.post<AuthResp>(API.LOGIN,request);
   }
 
+  logout() {
+  sessionStorage.removeItem('AuthToken');
+  sessionStorage.removeItem('User');
+}
 
 }
