@@ -15,5 +15,9 @@ export class EmployeeService {
     return this.http.get<Employee[]>(API.GET_EMPLOYEES);
   }
 
+  addEmployee(employee: Employee) : Observable<Employee>{
+    return this.http.post<Employee>(API.CREATE_EMPLOYEE, employee);
+  }
+
 
 }
