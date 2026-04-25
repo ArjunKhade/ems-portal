@@ -43,7 +43,7 @@
         <input type="text" placeholder="Search..." [formControl]="searchControl"
           class="px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
 
-        <button class="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+        <button (click)="addEmployee()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
           + Add Employee
         </button>
         <app-user-avatar [user]="user" (signOut)="signOut($event)"></app-user-avatar>
