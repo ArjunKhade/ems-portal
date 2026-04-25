@@ -9,10 +9,13 @@ import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
 import { UserAvatar } from "../user-avatar/user-avatar";
 import { User } from '../user-avatar/user.model';
 import { AuthService } from '../auth/auth-service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AddEmployee } from '../employee/add-employee/add-employee';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, ReactiveFormsModule, UserAvatar],
+  imports: [CommonModule, ReactiveFormsModule, UserAvatar, MatDialogModule, MatButtonModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
   standalone: true
@@ -34,8 +37,9 @@ export class Dashboard implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   constructor(private route: ActivatedRoute,
-     private authService: AuthService,
-    private router: Router) {}
+    private authService: AuthService,
+    private router: Router,
+    private dialogRef: MatDialog) {}
 
   ngOnInit(): void {
     this.employees = this.route.snapshot.data['employees'];
@@ -174,6 +178,17 @@ get PageEnd(): number{
 signOut(event:any){
  this.authService.logout();
  this.router.navigate(["login"]);
+}
+
+addEmployee(){
+  this.dialogRef.open(AddEmployee, {
+    width:'600px',
+    data: { Title: 'Add New Employee' }
+  })
+  
+  this.dialogRef.afterAllClosed.subscribe((res) =>{
+    console.log(res);
+  })
 }
 
 }
