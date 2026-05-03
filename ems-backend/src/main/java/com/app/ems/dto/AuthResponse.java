@@ -10,9 +10,9 @@ public class AuthResponse {
 
 	private String token;
 	
-	private String email;
+	private long id;
 	
 	private String name;
 	
-	private Collection<? extends GrantedAuthority> roles;
+//	private Collection<? extends GrantedAuthority> roles;
 }
