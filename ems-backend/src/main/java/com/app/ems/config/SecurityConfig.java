@@ -34,6 +34,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) {
 		return http
 					.csrf(customizer -> customizer.disable())
+					 .cors(Customizer.withDefaults()) 
 					.authorizeHttpRequests(request -> request
 							 .requestMatchers("/auth/**", "/swagger*/**", "/v*/api-docs/**").permitAll()
 							 .anyRequest().authenticated())
