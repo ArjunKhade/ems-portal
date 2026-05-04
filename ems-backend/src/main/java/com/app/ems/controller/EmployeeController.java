@@ -1,0 +1,55 @@
+package com.app.ems.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.ems.entities.Employee;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("employees")
+@Tag(name = "Employee Management", description = "APIs for managing employees")
+public class EmployeeController {
+	
+	@Operation(summary = "Add a new employee")
+	@PostMapping
+	ResponseEntity<?> addEmployee(@Valid @RequestBody Employee emp){
+	
+		return new ResponseEntity<>("addEmployee ", HttpStatus.CREATED);
+	}
+	
+	@Operation(summary = "Get employee details by empId")
+	@GetMapping("/{empId}")
+	ResponseEntity<?> getEmployee(@PathVariable long empId){
+		
+		return new ResponseEntity<>("getEmployee ", HttpStatus.OK);
+	}
+	
+	@Operation(summary = "Delete a employee details by empId")
+	@DeleteMapping("/{empId}")
+	@PreAuthorize("hasRole('ADMIN')")
+	ResponseEntity<?> deleteEmployee(@PathVariable long empId){
+		
+		return new ResponseEntity<>("deleteEmployee ", HttpStatus.OK);
+	}
+	
+	@Operation(summary = "Update a employee details")
+	@PutMapping("/{empId}")
+	ResponseEntity<?> updateEmployee(@Valid @RequestBody Employee emp, @PathVariable long empId){
+		
+		return new ResponseEntity<>("updateEmployee ", HttpStatus.OK);
+	}
+
+}
