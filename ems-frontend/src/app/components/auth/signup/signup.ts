@@ -29,6 +29,14 @@ export class Signup {
   
   toastr = inject(ToastrService);
 
+  roles = [
+  { value: 'ROLE_EMPLOYEE', label: 'Employee' },
+  { value: 'ROLE_ADMIN', label: 'Admin' },
+  { value: 'ROLE_HR', label: 'HR' },
+  { value: 'ROLE_MANAGER', label: 'Manager' },
+  { value: 'ROLE_LEAD', label: 'Lead' }
+];
+
   constructor(private authService: AuthService, private router: Router){}
   
   signupForm = new FormGroup({
