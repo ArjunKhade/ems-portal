@@ -18,12 +18,15 @@ import com.app.ems.entities.User;
 import com.app.ems.service.IUserService;
 import com.app.ems.utils.JWTUtils;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Tag(name = "Authentication", description = "User authentication APIs")
 public class AuthController {
 	
 	private final JWTUtils jwtUtils;
@@ -33,6 +36,7 @@ public class AuthController {
 	
 	// register new user 
 	@PostMapping("/signup")
+	@Operation(summary = "Register new user")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody UserSignupRequest request){
 		boolean findUserByEmail = userService.findUserByEmail(request.getEmail());
 		if(!findUserByEmail) {
@@ -44,6 +48,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/login")
+	@Operation(summary = "Authenticate user and generate JWT")
 	public ResponseEntity<?> validateUserCreateToken(@Valid @RequestBody UserLoginRequest request) {
 	
 		try {
