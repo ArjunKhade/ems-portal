@@ -1,5 +1,8 @@
 package com.app.ems.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,9 +22,18 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("employees")
+@RequestMapping("api/employees")
 @Tag(name = "Employee Management", description = "APIs for managing employees")
 public class EmployeeController {
+	
+	@Operation(summary = "Get all employee list")
+	@GetMapping("")
+	ResponseEntity<List<Employee>> getAllEmployees(){
+		List<Employee> emps = new ArrayList<>();
+		emps.add(new Employee("Arjun", "Khade", "2253552"));
+		emps.add(new Employee("Monika", "Khade", "878788"));
+		return new ResponseEntity<>(emps, HttpStatus.OK) ;
+	}
 	
 	@Operation(summary = "Add a new employee")
 	@PostMapping
