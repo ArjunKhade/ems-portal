@@ -63,7 +63,7 @@ export class Login {
         },
         error: (e) =>{
           console.log(e.error?.message)
-          this.toastr.error(e.error, 'Error');
+          this.toastr.error(e.error? e.error:'Something went wrong!' , 'Error');
         }
       })
 
