@@ -1,8 +1,8 @@
 package com.app.ems.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ems.entities.Employee;
+import com.app.ems.service.IEmployeeService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,13 +27,14 @@ import jakarta.validation.Valid;
 @Tag(name = "Employee Management", description = "APIs for managing employees")
 public class EmployeeController {
 	
+	@Autowired
+	private IEmployeeService empService;
+	
 	@Operation(summary = "Get all employee list")
 	@GetMapping("")
 	ResponseEntity<List<Employee>> getAllEmployees(){
-		List<Employee> emps = new ArrayList<>();
-		emps.add(new Employee("Arjun", "Khade", "2253552"));
-		emps.add(new Employee("Monika", "Khade", "878788"));
-		return new ResponseEntity<>(emps, HttpStatus.OK) ;
+	    //get all employee from service 
+		return new ResponseEntity<>(empService.getAllEmployees(), HttpStatus.OK) ;
 	}
 	
 	@Operation(summary = "Add a new employee")
