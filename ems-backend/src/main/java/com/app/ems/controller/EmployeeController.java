@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ems.dto.EmployeeResponseDto;
 import com.app.ems.entities.Employee;
 import com.app.ems.service.IEmployeeService;
 
@@ -32,7 +33,7 @@ public class EmployeeController {
 	
 	@Operation(summary = "Get all employee list")
 	@GetMapping("")
-	ResponseEntity<List<Employee>> getAllEmployees(){
+	ResponseEntity<List<EmployeeResponseDto>> getAllEmployees(){
 	    //get all employee from service 
 		return new ResponseEntity<>(empService.getAllEmployees(), HttpStatus.OK) ;
 	}
