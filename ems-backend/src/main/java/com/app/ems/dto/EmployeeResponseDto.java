@@ -1,10 +1,10 @@
 package com.app.ems.dto;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 public class EmployeeResponseDto extends BaseDto {
 	
 	private String name;
