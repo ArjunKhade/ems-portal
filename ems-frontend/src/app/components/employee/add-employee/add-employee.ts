@@ -27,7 +27,7 @@ export class AddEmployee {
     location: new FormControl('', Validators.required),
     department: new FormControl('', Validators.required),
     position: new FormControl('', Validators.required),
-    mobileNo: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
+    phone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
     dob: new FormControl('', Validators.required),
     joiningDate: new FormControl('', Validators.required),
     salary: new FormControl('', Validators.required),
@@ -57,9 +57,9 @@ export class AddEmployee {
     && this.employeeForm.get('email')?.touched;
   }
 
-  get IsInvalidMobileNo(){
-    return this.employeeForm.get('mobileNo')?.invalid 
-    && this.employeeForm.get('mobileNo')?.touched;
+  get IsInvalidPhone(){
+    return this.employeeForm.get('phone')?.invalid 
+    && this.employeeForm.get('phone')?.touched;
   }
 
   get IsInvalidDOB(){
