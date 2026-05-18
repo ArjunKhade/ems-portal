@@ -5,9 +5,9 @@ export class Employee {
   department: string = '';
   location: string = '';
   position: string = '';
-  mobileNo: string = '';
-  dob: string = '';          
-  joiningDate: string = '';
+  phone: string = '';
+  dob: Date = new Date();
+  joiningDate: Date = new Date();
   salary: number = 0;
   age: number = 0;
 }
