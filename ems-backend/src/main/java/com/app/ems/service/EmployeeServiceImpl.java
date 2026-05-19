@@ -1,12 +1,15 @@
 package com.app.ems.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.ems.dto.ApiResponse;
 import com.app.ems.dto.EmployeeRequestDto;
 import com.app.ems.dto.EmployeeResponseDto;
 import com.app.ems.entities.Employee;
+import com.app.ems.exceptions.EmployeeHandlingException;
 import com.app.ems.mapper.EmployeeMapper;
 import com.app.ems.repo.EmployeeRepo;
 
@@ -40,20 +43,39 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public EmployeeResponseDto getEmployeeById(Long empId) {
-		// TODO Auto-generated method stub
-		return null;
+		Employee employee = empRepo.findById(empId)
+				.orElseThrow(()-> new EmployeeHandlingException("Employee with Id "+empId+" Not found!"));
+		return  empMapper.toDto(employee);
 	}
 
 	@Override
 	public EmployeeResponseDto updateEmployee(Long empId, EmployeeRequestDto request) {
-		// TODO Auto-generated method stub
-		return null;
+		// find employee by id
+		Employee employee = empRepo.findById(empId)
+				.orElseThrow(()-> new EmployeeHandlingException("Employee with Id "+empId+" Not found!"));
+		//update employee details
+		employee.setAge(request.getAge());
+		employee.setDepartment(request.getDepartment());
+		employee.setDob(request.getDob());
+		employee.setEmail(request.getEmail());
+		employee.setJoiningDate(request.getJoiningDate());
+		employee.setLocation(request.getLocation());
+		employee.setName(request.getName());
+		employee.setPhone(request.getPhone());
+		employee.setPosition(request.getPosition());
+		employee.setSalary(request.getSalary());
+		//save employee
+		Employee savedEmployee = empRepo.save(employee);
+		
+		return empMapper.toDto(savedEmployee);
 	}
 
 	@Override
-	public void deteteEmployee(Long empId) {
-		// TODO Auto-generated method stub
-		
+	public ApiResponse deleteEmployee(Long empId) {
+		Employee employee = empRepo.findById(empId)
+		         .orElseThrow(()-> new EmployeeHandlingException("Employee with Id "+empId+" Not found!"));
+		empRepo.delete(employee);
+		return new ApiResponse("Employee with id "+empId+" deleted successfully!");
 	}
 
 }
