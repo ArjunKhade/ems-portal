@@ -42,32 +42,28 @@ public class EmployeeController {
 	@Operation(summary = "Add a new employee")
 	@PostMapping
 	ResponseEntity<?> addEmployee(@Valid @RequestBody EmployeeRequestDto request){
-		
 		EmployeeResponseDto registeredEmployee = empService.registerEmployee(request);
-	
 		return new ResponseEntity<>(registeredEmployee, HttpStatus.CREATED);
 	}
 	
 	@Operation(summary = "Get employee details by empId")
 	@GetMapping("/{empId}")
 	ResponseEntity<?> getEmployee(@PathVariable long empId){
-		
-		return new ResponseEntity<>("getEmployee ", HttpStatus.OK);
+		return new ResponseEntity<>(empService.getEmployeeById(empId), HttpStatus.OK);
 	}
 	
 	@Operation(summary = "Delete a employee details by empId")
 	@DeleteMapping("/{empId}")
 	@PreAuthorize("hasRole('ADMIN')")
 	ResponseEntity<?> deleteEmployee(@PathVariable long empId){
-		
-		return new ResponseEntity<>("deleteEmployee ", HttpStatus.OK);
+		return new ResponseEntity<>(empService.deleteEmployee(empId), HttpStatus.OK);
 	}
 	
 	@Operation(summary = "Update a employee details")
 	@PutMapping("/{empId}")
-	ResponseEntity<?> updateEmployee(@Valid @RequestBody Employee emp, @PathVariable long empId){
+	ResponseEntity<?> updateEmployee(@Valid @RequestBody EmployeeRequestDto emp, @PathVariable long empId){
 		
-		return new ResponseEntity<>("updateEmployee ", HttpStatus.OK);
+		return new ResponseEntity<>(empService.updateEmployee(empId, emp), HttpStatus.OK);
 	}
 
 }
