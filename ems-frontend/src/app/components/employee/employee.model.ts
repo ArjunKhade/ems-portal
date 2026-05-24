@@ -10,6 +10,7 @@ export class Employee {
   joiningDate: Date = new Date();
   salary: number = 0;
   age: number = 0;
+  status: string = '';
 }
 
 export interface ApiResponse {
