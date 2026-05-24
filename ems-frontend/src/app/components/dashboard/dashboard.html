@@ -70,12 +70,13 @@
       <table class="w-full text-sm text-left">
         <thead class="text-slate-500 border-b">
           <tr>
-            <th class="py-2">Employee</th>
-            <th>ID</th>
-            <th>Department</th>
-            <th>Position</th>
-            <th>Status</th>
-            <th class="text-right">Actions</th>
+            <th class="py-2">{{ 'Employee' | uppercase }}</th>
+            <th>{{ 'EMP ID' | uppercase }}</th>
+            <th>{{ 'Department' | uppercase }}</th>
+            <th>{{ 'Position' | uppercase }}</th>
+            <th>{{ 'Join Date' | uppercase }}</th>
+            <th>{{ 'Status' | uppercase }}</th>
+            <th class="text-right">{{ 'Actions' | uppercase }}</th>
           </tr>
         </thead>
 
@@ -91,21 +92,28 @@
               </div>
               <div>
                 <p class="font-medium">{{emp?.name}}</p>
-                <p class="text-xs text-slate-400">alex@company.com</p>
+                <p class="text-xs text-slate-400">{{emp?.email}}</p>
               </div>
             </td>
             <td>{{emp?.id}}</td>
             <td>{{emp?.department}}</td>
             <td>{{emp?.location}}</td>
+            <td>{{emp?.joiningDate}}</td>
             <td>
-              <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-600">
-                Active
+              <span class="px-2 py-1 text-xs rounded-full " [ngClass] = "{'bg-green-100 text-green-600': emp?.status === 'Active', 'bg-red-100 text-red-600': emp?.status === 'Deleted'}" >
+                {{emp?.status}}
               </span>
             </td>
             <td class="text-right space-x-2">
-              <button class="text-cyan-600 text-sm" (click)="onViewClicked(emp?.id)">View</button>
-              <button class="text-slate-500 text-sm" (click)="onEditClicked(emp?.id)">Edit</button>
-              <button class="text-slate-500 text-sm" (click)="onDeleteClicked(emp?.id)">Delete</button>
+              <button class="text-cyan-600 text-sm" (click)="onViewClicked(emp?.id)">
+               <mat-icon>visibility</mat-icon>
+              </button>
+              <button class="text-slate-500 text-sm" (click)="onEditClicked(emp?.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button class="text-slate-500 text-sm" (click)="onDeleteClicked(emp?.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
             </td>
           </tr>
           }
