@@ -11,3 +11,8 @@ export class Employee {
   salary: number = 0;
   age: number = 0;
 }
+
+export interface ApiResponse {
+  timeStamp: string;
+  message: string;
+}
