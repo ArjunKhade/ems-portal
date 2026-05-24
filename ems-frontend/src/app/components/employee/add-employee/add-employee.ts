@@ -44,7 +44,7 @@ export class AddEmployee {
     this.empService.addEmployee(payload).subscribe({
       next: (res) => {
         console.log(res);
-        this.dialogRef.close();
+        this.dialogRef.close(res);
       },
       error: (err) => {
         this.toastr.error(err.error.message, 'Error');
@@ -71,9 +71,6 @@ export class AddEmployee {
     return this.employeeForm.get('joiningDate')?.invalid 
     && this.employeeForm.get('joiningDate')?.touched;
   }
-
-
-  
 
   get IsInvalidFullName(){
     return this.employeeForm.get('name')?.invalid 
