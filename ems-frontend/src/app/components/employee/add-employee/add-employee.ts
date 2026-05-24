@@ -1,4 +1,4 @@
-import { Component, inject, Inject } from '@angular/core';
+import { Component, inject, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogActions, MatDialogContent, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { EmployeeService } from '../employee.service';
@@ -12,13 +12,39 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './add-employee.css',
   standalone: true
 })
-export class AddEmployee {
+export class AddEmployee  implements OnInit{
 
   empService = inject(EmployeeService);
   toastr = inject(ToastrService);
   constructor(private dialogRef: MatDialogRef<AddEmployee>,
      @Inject (MAT_DIALOG_DATA) public data: any) {
      }
+
+  ngOnInit(): void {
+    if (this.data?.employee) {
+
+      this.employeeForm.patchValue({
+        empId: this.data.employee.id,
+        name: this.data.employee.name,
+        email: this.data.employee.email,
+        location: this.data.employee.location,
+        department: this.data.employee.department,
+        position: this.data.employee.position,
+        phone: this.data.employee.phone,
+        dob: this.data.employee.dob,
+        joiningDate: this.data.employee.joiningDate,
+        salary: this.data.employee.salary,
+        age: this.data.employee.age
+      });
+    }
+
+  // VIEW MODE
+  if (this.data?.isView) {
+    this.employeeForm.disable();
+  }
+
+  }
+
   //create reactive form using form group and form controls
    employeeForm: FormGroup = new FormGroup({
     empId: new FormControl(''),
@@ -40,6 +66,20 @@ export class AddEmployee {
 
   onSubmit(){
     const payload = { ...this.employeeForm.value };
+    //edit case
+    if(payload.empId){
+      this.empService.updateEmployee(payload.empId, payload).subscribe({
+        next:(res: Employee)=>{
+          console.log(res);
+          this.dialogRef.close(res);
+        },
+        error: (err) => {
+        this.toastr.error(err.error.message, 'Error');
+        }
+      })
+
+    }else{
+    //add case
     delete payload.empId;
     this.empService.addEmployee(payload).subscribe({
       next: (res) => {
@@ -50,6 +90,8 @@ export class AddEmployee {
         this.toastr.error(err.error.message, 'Error');
       }
     })
+    }
+  
   }
 
   get IsInvalidEmail(){
@@ -101,9 +143,5 @@ export class AddEmployee {
     return this.employeeForm.get('age')?.invalid 
     && this.employeeForm.get('age')?.touched;
   }
-
-
-
-
 
 }
