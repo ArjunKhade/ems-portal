@@ -28,5 +28,7 @@ public class EmployeeResponseDto extends BaseDto {
     private double salary;
 
     private int age;
+    
+    private String status;
 	
 }
