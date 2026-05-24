@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee/employee.service';
-import { Employee } from '../employee/employee.model';
+import { ApiResponse, Employee } from '../employee/employee.model';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -181,14 +181,70 @@ signOut(event:any){
 }
 
 addEmployee(){
-  this.dialogRef.open(AddEmployee, {
+   const dialog = this.dialogRef.open(AddEmployee, {
     width:'600px',
     data: { Title: 'Add New Employee' }
   })
   
-  this.dialogRef.afterAllClosed.subscribe((res) =>{
-    console.log(res);
+  dialog.afterClosed().subscribe((res: Employee) =>{
+    if (!res) return;
+
+    // add new employee at top
+    this.employees.unshift(res);
+
+    // update datasource
+    this.filteredEmployees = [...this.employees];
+
+    // reset pagination
+    this.currentSelectedPage = 0;
+    this.visibleStartIndex = 0;
+
+    this.toaster.success('Employee Added Successfully.', "Success");
+     // refresh UI
+    this.cdr.detectChanges();
   })
+}
+
+
+onViewClicked(id: number | undefined){
+ alert("Clikd")
+}
+
+onEditClicked(id: number | undefined){
+ alert("Clikd")
+}
+
+onDeleteClicked(id: number | undefined){
+ if(id){
+   this.employeeService.deleteEmployee(id).subscribe({
+    next:((res: ApiResponse)=>{
+      if(res)
+      this.toaster.success(res.message)
+
+      // remove from original array
+      this.employees = this.employees.filter(
+        emp => emp.id !== id
+      );
+
+        // remove from filtered array
+      this.filteredEmployees = this.filteredEmployees.filter(
+        emp => emp.id !== id
+      );
+
+       // reset page if current page becomes empty
+      if (
+        this.currentSelectedPage > 0 &&
+        this.paginatedEmployees.length === 0
+      ) {
+        this.currentSelectedPage--;
+      }
+
+       // refresh UI
+      this.cdr.detectChanges();
+
+    })
+   })
+ }
 }
 
 }
