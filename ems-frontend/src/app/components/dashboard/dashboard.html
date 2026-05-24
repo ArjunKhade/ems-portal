@@ -103,9 +103,9 @@
               </span>
             </td>
             <td class="text-right space-x-2">
-              <button class="text-cyan-600 text-sm">View</button>
-              <button class="text-slate-500 text-sm">Edit</button>
-              <button class="text-slate-500 text-sm">Delete</button>
+              <button class="text-cyan-600 text-sm" (click)="onViewClicked(emp?.id)">View</button>
+              <button class="text-slate-500 text-sm" (click)="onEditClicked(emp?.id)">Edit</button>
+              <button class="text-slate-500 text-sm" (click)="onDeleteClicked(emp?.id)">Delete</button>
             </td>
           </tr>
           }
