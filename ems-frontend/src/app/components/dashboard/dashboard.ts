@@ -12,10 +12,11 @@ import { AuthService } from '../auth/auth-service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddEmployee } from '../employee/add-employee/add-employee';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, ReactiveFormsModule, UserAvatar, MatDialogModule, MatButtonModule],
+  imports: [CommonModule,MatIconModule, ReactiveFormsModule, UserAvatar, MatDialogModule, MatButtonModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
   standalone: true
@@ -59,6 +60,9 @@ export class Dashboard implements OnInit {
     // Applies filtering logic on employee list
     this.applyFilter(value || '');
   });
+
+
+  
 
   }
 
@@ -207,11 +211,70 @@ addEmployee(){
 
 
 onViewClicked(id: number | undefined){
- alert("Clikd")
+  if (!id) return;
+
+  const employee = this.employees.find(
+    emp => emp.id === id
+  );
+
+  if (!employee) return;
+
+  const dialog = this.dialogRef.open(AddEmployee, {
+    width: '600px',
+    data: {
+      Title: 'View Employee Details',
+      isView: true,
+      employee: employee
+    }
+  });
+
 }
 
 onEditClicked(id: number | undefined){
- alert("Clikd")
+
+  if (!id) return;
+
+  const employee = this.employees.find(
+    emp => emp.id === id
+  );
+
+  if (!employee) return;
+
+  const dialog = this.dialogRef.open(AddEmployee, {
+    width: '600px',
+    data: {
+      Title: 'Edit Employee Details',
+      isEdit: true,
+      employee: employee
+    }
+  });
+
+  dialog.afterClosed().subscribe((updatedEmployee: Employee) =>{
+    debugger
+    console.log(updatedEmployee)
+     // if dialog closed without save
+    if (!updatedEmployee) return;
+
+    let index = this.employees.findIndex((emp) => emp.id === updatedEmployee.id);
+
+    if(index !== -1){
+      this.employees[index] = updatedEmployee;
+    }
+
+     // refresh filtered datasource
+    this.filteredEmployees = [...this.employees];
+
+    // show success message
+    this.toaster.success(
+      'Employee Updated Successfully.',
+      'Success'
+    );
+
+    // refresh UI
+    this.cdr.detectChanges();
+
+  })
+
 }
 
 onDeleteClicked(id: number | undefined){
@@ -219,7 +282,7 @@ onDeleteClicked(id: number | undefined){
    this.employeeService.deleteEmployee(id).subscribe({
     next:((res: ApiResponse)=>{
       if(res)
-      this.toaster.success(res.message)
+      this.toaster.success(res.message, "Success")
 
       // remove from original array
       this.employees = this.employees.filter(
