@@ -7,5 +7,5 @@ export const API = {
     GET_EMPLOYEE: (empId: number) => `${BASE_URL}/api/employees/${empId}`,
     DELETE_EMPLOYEE: (empId: number) => `${BASE_URL}/api/employees/${empId}`,
     CREATE_EMPLOYEE: BASE_URL+'/api/employees',
-    UPDATE_EMPLOYEE: BASE_URL+'/api/employees',
+    UPDATE_EMPLOYEE: (empId: number) => `${BASE_URL}/api/employees/${empId}`,
 } 
