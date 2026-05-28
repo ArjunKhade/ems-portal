@@ -5,7 +5,7 @@ import { ApiResponse, Employee } from '../employee/employee.model';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, startWith } from 'rxjs';
 import { UserAvatar } from "../user-avatar/user-avatar";
 import { User } from '../user-avatar/user.model';
 import { AuthService } from '../auth/auth-service';
@@ -35,6 +35,7 @@ export class Dashboard implements OnInit {
   currentSelectedPage: number = 0;
   visibleStartIndex: number = 0;
   searchControl = new FormControl('');
+  departmentControl = new FormControl('All Departments');
   filteredEmployees: Employee[] = [];
 
   private cdr = inject(ChangeDetectorRef);
@@ -53,14 +54,18 @@ export class Dashboard implements OnInit {
    */
   this.filteredEmployees = [...this.employees];
 
-  //Subscribes to search input value changes
-  this.searchControl.valueChanges.pipe(
-    startWith(''),//ensures filter runs on init
-    debounceTime(300),//avoids excessive filtering calls
-    distinctUntilChanged()//prevents duplicate executions
-  ).subscribe(value => {
-    // Applies filtering logic on employee list
-    this.applyFilter(value || '');
+  combineLatest([
+    this.searchControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      distinctUntilChanged()
+    ),
+    this.departmentControl.valueChanges.pipe(
+      startWith('All Departments'),
+      distinctUntilChanged()
+    )
+  ]).subscribe(([searchTerm, department]) => {
+    this.applyFilter(searchTerm || '', department || 'All Departments');
   });
 
 
@@ -155,21 +160,33 @@ get dataSource(): Employee[] {
   return this.filteredEmployees;
 }
 
-applyFilter(searchTerm: string) {
-  const term = searchTerm.toLowerCase().trim();
+get departments(): string[] {
+  return Array.from(
+    new Set(
+      this.employees
+        .map(emp => emp.department?.trim())
+        .filter((department): department is string => !!department)
+    )
+  ).sort((a, b) => a.localeCompare(b));
+}
 
-  if (!term) {
-    // If empty, show everyone
-    this.filteredEmployees = [...this.employees];
-  } else {
-    // Perform the filter
-    this.filteredEmployees = this.employees.filter(emp =>
+applyFilter(searchTerm: string, department: string = this.departmentControl.value || 'All Departments') {
+  const term = searchTerm.toLowerCase().trim();
+  const selectedDepartment = department.trim();
+
+  this.filteredEmployees = this.employees.filter(emp => {
+    const matchesSearch = !term ||
       emp.name.toLowerCase().includes(term) ||
       emp.department.toLowerCase().includes(term) ||
       emp.location.toLowerCase().includes(term) ||
-      emp.id?.toString().includes(term)
-    );
-  }
+      emp.id?.toString().includes(term);
+
+    const matchesDepartment =
+      selectedDepartment === 'All Departments' ||
+      emp.department?.trim() === selectedDepartment;
+
+    return matchesSearch && matchesDepartment;
+  });
 
   // Always reset to the first page when the data changes
   this.currentSelectedPage = 0;
@@ -202,12 +219,7 @@ addEmployee(){
     // add new employee at top
     this.employees.unshift(res);
 
-    // update datasource
-    this.filteredEmployees = [...this.employees];
-
-    // reset pagination
-    this.currentSelectedPage = 0;
-    this.visibleStartIndex = 0;
+    this.applyFilter(this.searchControl.value || '');
 
     this.toaster.success('Employee Added Successfully.', "Success");
      // refresh UI
@@ -267,8 +279,7 @@ onEditClicked(id: number | undefined){
       this.employees[index] = updatedEmployee;
     }
 
-     // refresh filtered datasource
-    this.filteredEmployees = [...this.employees];
+    this.applyFilter(this.searchControl.value || '');
 
     // show success message
     this.toaster.success(
@@ -295,10 +306,7 @@ onDeleteClicked(id: number | undefined){
         emp => emp.id !== id
       );
 
-        // remove from filtered array
-      this.filteredEmployees = this.filteredEmployees.filter(
-        emp => emp.id !== id
-      );
+      this.applyFilter(this.searchControl.value || '');
 
        // reset page if current page becomes empty
       if (

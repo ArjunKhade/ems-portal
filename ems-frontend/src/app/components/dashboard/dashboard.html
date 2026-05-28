@@ -50,8 +50,13 @@
           <span class="rounded-full bg-slate-100 px-3 py-1">On Leave</span>
         </div>
 
-        <select class="w-full rounded-lg border px-3 py-2 text-sm sm:w-auto">
+        <select
+          [formControl]="departmentControl"
+          class="w-full rounded-lg border px-3 py-2 text-sm sm:w-auto">
           <option>All Departments</option>
+          @for (department of departments; track department) {
+          <option [value]="department">{{ department }}</option>
+          }
         </select>
       </div>
 
