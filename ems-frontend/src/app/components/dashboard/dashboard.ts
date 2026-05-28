@@ -36,6 +36,7 @@ export class Dashboard implements OnInit {
   visibleStartIndex: number = 0;
   searchControl = new FormControl('');
   departmentControl = new FormControl('All Departments');
+  selectedStatus = 'All';
   filteredEmployees: Employee[] = [];
 
   private cdr = inject(ChangeDetectorRef);
@@ -160,6 +161,10 @@ get dataSource(): Employee[] {
   return this.filteredEmployees;
 }
 
+get statusFilters(): string[] {
+  return ['All', 'Active', 'On Leave'];
+}
+
 get departments(): string[] {
   return Array.from(
     new Set(
@@ -170,9 +175,19 @@ get departments(): string[] {
   ).sort((a, b) => a.localeCompare(b));
 }
 
+setStatusFilter(status: string): void {
+  this.selectedStatus = status;
+  this.applyFilter(this.searchControl.value || '');
+}
+
+isStatusFilterActive(status: string): boolean {
+  return this.selectedStatus === status;
+}
+
 applyFilter(searchTerm: string, department: string = this.departmentControl.value || 'All Departments') {
   const term = searchTerm.toLowerCase().trim();
   const selectedDepartment = department.trim();
+  const selectedStatus = this.selectedStatus.trim();
 
   this.filteredEmployees = this.employees.filter(emp => {
     const matchesSearch = !term ||
@@ -185,7 +200,11 @@ applyFilter(searchTerm: string, department: string = this.departmentControl.valu
       selectedDepartment === 'All Departments' ||
       emp.department?.trim() === selectedDepartment;
 
-    return matchesSearch && matchesDepartment;
+    const matchesStatus =
+      selectedStatus === 'All' ||
+      emp.status?.trim() === selectedStatus;
+
+    return matchesSearch && matchesDepartment && matchesStatus;
   });
 
   // Always reset to the first page when the data changes
