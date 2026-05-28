@@ -50,14 +50,19 @@
           <span class="rounded-full bg-slate-100 px-3 py-1">On Leave</span>
         </div>
 
-        <select
-          [formControl]="departmentControl"
-          class="w-full rounded-lg border px-3 py-2 text-sm sm:w-auto">
-          <option>All Departments</option>
-          @for (department of departments; track department) {
-          <option [value]="department">{{ department }}</option>
-          }
-        </select>
+        <div class="relative w-full sm:w-56">
+          <select
+            [formControl]="departmentControl"
+            class="h-10 w-full appearance-none rounded-lg border border-slate-300 bg-white px-3 pr-10 text-sm text-slate-700 shadow-sm outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-100">
+            <option>All Departments</option>
+            @for (department of departments; track department) {
+            <option [value]="department">{{ department }}</option>
+            }
+          </select>
+          <mat-icon class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
+            expand_more
+          </mat-icon>
+        </div>
       </div>
 
       <!-- Mobile Cards -->
