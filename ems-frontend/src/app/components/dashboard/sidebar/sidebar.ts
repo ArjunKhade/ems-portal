@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
 type SidebarItem = {
@@ -9,7 +10,7 @@ type SidebarItem = {
 
 @Component({
   selector: 'app-sidebar',
-  imports: [MatIconModule],
+  imports: [MatIconModule, NgClass],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })

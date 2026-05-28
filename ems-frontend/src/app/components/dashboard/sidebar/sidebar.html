@@ -1,27 +1,27 @@
 <aside
   class="min-h-screen bg-white/70 backdrop-blur-xl border-r border-slate-200 transition-all duration-200"
-  [class.w-64]="!isCollapsed"
-  [class.w-20]="isCollapsed"
-  [class.p-5]="!isCollapsed"
-  [class.p-4]="isCollapsed">
+  [ngClass]="isCollapsed ? 'w-14 p-2 sm:w-16 sm:p-3 lg:w-20 lg:p-4' : 'w-14 p-2 sm:w-16 sm:p-3 lg:w-64 lg:p-5'">
 
     <!-- Logo -->
-    <div class="flex items-center gap-3 mb-8" [class.justify-center]="isCollapsed">
-      @if (!isCollapsed) {
-        <div class="w-10 h-10 shrink-0 flex items-center justify-center rounded-xl bg-cyan-500 text-white font-bold">
+    <div
+      class="mb-8 flex items-center justify-center gap-3 lg:justify-start"
+      [ngClass]="{'lg:justify-center': isCollapsed}">
+      <div
+        class="hidden w-10 h-10 shrink-0 items-center justify-center rounded-xl bg-cyan-500 text-white font-bold lg:flex"
+        [ngClass]="{'lg:hidden': isCollapsed}">
         E
       </div>
-    }
+
       @if (!isCollapsed) {
-        <h2 class="text-lg font-semibold flex-1 whitespace-nowrap">EMS Admin</h2>
+        <h2 class="hidden text-lg font-semibold flex-1 whitespace-nowrap lg:block">EMS Admin</h2>
       }
 
       <button
         type="button"
         (click)="toggleSidebar.emit()"
-        class="w-9 h-9 shrink-0 flex items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-cyan-400 sm:h-9 sm:w-9"
         [attr.aria-label]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'">
-        <mat-icon>menu</mat-icon>
+        <mat-icon class="scale-90 sm:scale-100">menu</mat-icon>
       </button>
     </div>
 
@@ -29,16 +29,16 @@
     <nav class="space-y-2 text-sm">
       @for (item of menuItems; track item.label) {
         <a
-          class="flex items-center gap-3 rounded-lg px-3 py-2 font-medium transition-colors"
-          [class.justify-center]="isCollapsed"
+          class="flex items-center justify-center gap-3 rounded-lg px-2 py-2 font-medium transition-colors sm:px-3 lg:justify-start"
+          [ngClass]="{'lg:justify-center': isCollapsed}"
           [class.bg-cyan-100]="item.active"
           [class.text-cyan-600]="item.active"
           [class.hover:bg-slate-100]="!item.active"
-          [title]="isCollapsed ? item.label : ''">
-          <mat-icon class="shrink-0">{{ item.icon }}</mat-icon>
+          [title]="item.label">
+          <mat-icon class="shrink-0 scale-90 sm:scale-100">{{ item.icon }}</mat-icon>
 
           @if (!isCollapsed) {
-            <span class="whitespace-nowrap">{{ item.label }}</span>
+            <span class="hidden whitespace-nowrap lg:inline">{{ item.label }}</span>
           }
         </a>
       }

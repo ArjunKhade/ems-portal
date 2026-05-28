@@ -31,7 +31,7 @@ export class Dashboard implements OnInit {
   
   //Pagination section 
   PAGE_SIZE = 8;
-  VISIBLE_PAGES = 20;
+  VISIBLE_PAGES = 5;
   currentSelectedPage: number = 0;
   visibleStartIndex: number = 0;
   searchControl = new FormControl('');

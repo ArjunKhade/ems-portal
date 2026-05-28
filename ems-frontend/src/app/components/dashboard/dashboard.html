@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 flex">
+<div class="flex min-h-screen overflow-hidden bg-gradient-to-br from-slate-100 via-white to-slate-200">
 
   <!-- Sidebar -->
   <app-sidebar
@@ -7,114 +7,195 @@
   </app-sidebar>
 
   <!-- Main Content -->
-  <main class="flex-1 p-6">
+  <main class="min-w-0 flex-1 p-3 sm:p-4 lg:p-6">
 
     <!-- Header -->
-    <div class="flex justify-between items-center mb-6">
-      <div class="flex items-center gap-3">
-        <h1 class="text-2xl font-semibold text-slate-800">Employees</h1>
+    <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+      <div class="flex items-center justify-between gap-3">
+        <h1 class="text-xl font-semibold text-slate-800 sm:text-2xl">Employees</h1>
+
+        <div class="lg:hidden">
+          <app-user-avatar [user]="user" (signOut)="signOut($event)"></app-user-avatar>
+        </div>
       </div>
 
-      <div class="flex items-center gap-3">
-        <input type="text" placeholder="Search..." [formControl]="searchControl"
-          class="px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+      <div class="flex w-full flex-col gap-3 sm:flex-row sm:items-center lg:w-auto">
+        <input
+          type="text"
+          placeholder="Search..."
+          [formControl]="searchControl"
+          class="w-full rounded-lg border border-slate-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400 sm:min-w-64 lg:w-72" />
 
-        <button (click)="addEmployee()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
-          + Add Employee
-        </button>
-        <app-user-avatar [user]="user" (signOut)="signOut($event)"></app-user-avatar>
+        <div class="flex items-center gap-3">
+          <button
+            (click)="addEmployee()"
+            class="min-h-10 flex-1 whitespace-nowrap rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 px-4 py-2 text-white sm:flex-none">
+            + Add Employee
+          </button>
+          <div class="hidden lg:block">
+            <app-user-avatar [user]="user" (signOut)="signOut($event)"></app-user-avatar>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Table Card -->
-    <div class="bg-white/70 backdrop-blur-xl border border-slate-200 rounded-2xl shadow p-4">
+    <!-- Employee List -->
+    <div class="rounded-xl border border-slate-200 bg-white/70 p-3 shadow backdrop-blur-xl sm:p-4">
 
       <!-- Filters -->
-      <div class="flex justify-between items-center mb-4">
-        <div class="flex gap-2 text-sm">
-          <span class="px-3 py-1 rounded-full bg-cyan-100 text-cyan-600">All</span>
-          <span class="px-3 py-1 rounded-full bg-slate-100">Active</span>
-          <span class="px-3 py-1 rounded-full bg-slate-100">On Leave</span>
+      <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-wrap gap-2 text-sm">
+          <span class="rounded-full bg-cyan-100 px-3 py-1 text-cyan-600">All</span>
+          <span class="rounded-full bg-slate-100 px-3 py-1">Active</span>
+          <span class="rounded-full bg-slate-100 px-3 py-1">On Leave</span>
         </div>
 
-        <select class="px-3 py-2 border rounded-lg text-sm">
+        <select class="w-full rounded-lg border px-3 py-2 text-sm sm:w-auto">
           <option>All Departments</option>
         </select>
       </div>
 
-      <!-- Table -->
-      <table class="w-full text-sm text-left">
-        <thead class="text-slate-500 border-b">
-          <tr>
-            <th class="py-2">{{ 'Employee' | uppercase }}</th>
-            <th>{{ 'EMP ID' | uppercase }}</th>
-            <th>{{ 'Department' | uppercase }}</th>
-            <th>{{ 'Position' | uppercase }}</th>
-            <th>{{ 'Join Date' | uppercase }}</th>
-            <th>{{ 'Status' | uppercase }}</th>
-            <th class="text-right">{{ 'Actions' | uppercase }}</th>
-          </tr>
-        </thead>
-
-        <tbody class="text-slate-700">
-
-          <!-- Row -->
-
-          @for(emp of paginatedEmployees; track emp.id){
-          <tr class="border-b hover:bg-slate-50">
-            <td class="py-3 flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center text-xs">
+      <!-- Mobile Cards -->
+      <div class="space-y-3 md:hidden">
+        @for(emp of paginatedEmployees; track emp.id){
+        <div class="rounded-lg border border-slate-200 bg-white/80 p-3">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex min-w-0 items-center gap-3">
+              <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-cyan-500 text-xs text-white">
                 {{'AK'}}
               </div>
-              <div>
-                <p class="font-medium">{{emp?.name}}</p>
-                <p class="text-xs text-slate-400">{{emp?.email}}</p>
+              <div class="min-w-0">
+                <p class="truncate font-medium text-slate-800">{{emp?.name}}</p>
+                <p class="truncate text-xs text-slate-400">{{emp?.email}}</p>
               </div>
-            </td>
-            <td>{{emp?.id}}</td>
-            <td>{{emp?.department}}</td>
-            <td>{{emp?.location}}</td>
-            <td>{{emp?.joiningDate}}</td>
-            <td>
-              <span class="px-2 py-1 text-xs rounded-full " [ngClass] = "{'bg-green-100 text-green-600': emp?.status === 'Active', 'bg-red-100 text-red-600': emp?.status === 'Deleted'}" >
-                {{emp?.status}}
-              </span>
-            </td>
-            <td class="text-right space-x-2">
-              <button class="text-cyan-600 text-sm" (click)="onViewClicked(emp?.id)">
-               <mat-icon>visibility</mat-icon>
-              </button>
-              <button class="text-slate-500 text-sm" (click)="onEditClicked(emp?.id)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button class="text-slate-500 text-sm" (click)="onDeleteClicked(emp?.id)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </tr>
-          }
+            </div>
 
-        </tbody>
-      </table>
+            <span
+              class="shrink-0 rounded-full px-2 py-1 text-xs"
+              [ngClass]="{'bg-green-100 text-green-600': emp?.status === 'Active', 'bg-red-100 text-red-600': emp?.status === 'Deleted'}">
+              {{emp?.status}}
+            </span>
+          </div>
+
+          <div class="mt-3 grid grid-cols-2 gap-3 text-sm text-slate-600">
+            <div>
+              <p class="text-xs uppercase text-slate-400">Emp ID</p>
+              <p class="truncate">{{emp?.id}}</p>
+            </div>
+            <div>
+              <p class="text-xs uppercase text-slate-400">Department</p>
+              <p class="truncate">{{emp?.department}}</p>
+            </div>
+            <div>
+              <p class="text-xs uppercase text-slate-400">Position</p>
+              <p class="truncate">{{emp?.location}}</p>
+            </div>
+            <div>
+              <p class="text-xs uppercase text-slate-400">Join Date</p>
+              <p class="truncate">{{emp?.joiningDate}}</p>
+            </div>
+          </div>
+
+          <div class="mt-3 flex justify-end gap-2">
+            <button
+              class="flex h-9 w-9 items-center justify-center rounded-lg text-cyan-600 hover:bg-cyan-50"
+              (click)="onViewClicked(emp?.id)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button
+              class="flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100"
+              (click)="onEditClicked(emp?.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              class="flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100"
+              (click)="onDeleteClicked(emp?.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        }
+      </div>
+
+      <!-- Tablet/Desktop Table -->
+      <div class="hidden overflow-x-auto md:block">
+        <table class="w-full min-w-[760px] text-left text-sm">
+          <thead class="border-b text-slate-500">
+            <tr>
+              <th class="py-2">{{ 'Employee' | uppercase }}</th>
+              <th>{{ 'EMP ID' | uppercase }}</th>
+              <th>{{ 'Department' | uppercase }}</th>
+              <th>{{ 'Position' | uppercase }}</th>
+              <th>{{ 'Join Date' | uppercase }}</th>
+              <th>{{ 'Status' | uppercase }}</th>
+              <th class="text-right">{{ 'Actions' | uppercase }}</th>
+            </tr>
+          </thead>
+
+          <tbody class="text-slate-700">
+            @for(emp of paginatedEmployees; track emp.id){
+            <tr class="border-b hover:bg-slate-50">
+              <td class="flex items-center gap-3 py-3">
+                <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-500 text-xs text-white">
+                  {{'AK'}}
+                </div>
+                <div class="min-w-0">
+                  <p class="truncate font-medium">{{emp?.name}}</p>
+                  <p class="truncate text-xs text-slate-400">{{emp?.email}}</p>
+                </div>
+              </td>
+              <td>{{emp?.id}}</td>
+              <td>{{emp?.department}}</td>
+              <td>{{emp?.location}}</td>
+              <td>{{emp?.joiningDate}}</td>
+              <td>
+                <span
+                  class="rounded-full px-2 py-1 text-xs"
+                  [ngClass]="{'bg-green-100 text-green-600': emp?.status === 'Active', 'bg-red-100 text-red-600': emp?.status === 'Deleted'}">
+                  {{emp?.status}}
+                </span>
+              </td>
+              <td class="space-x-2 text-right">
+                <button class="text-sm text-cyan-600" (click)="onViewClicked(emp?.id)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button class="text-sm text-slate-500" (click)="onEditClicked(emp?.id)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button class="text-sm text-slate-500" (click)="onDeleteClicked(emp?.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
 
       <!-- Pagination -->
-      <div class="flex justify-between items-center mt-4 text-sm text-slate-500">
-        <span>Showing {{Start + 1}}–{{PageEnd}} of {{TotalEmployee}}</span>
+      <div class="mt-4 flex flex-col gap-3 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <span>Showing {{Start + 1}}-{{PageEnd}} of {{TotalEmployee}}</span>
 
-        <div class="flex gap-2">
-          <button (click)="goToPreviousPage()" [disabled]="currentSelectedPage === 0"
-            class="px-3 py-1 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+        <div class="flex flex-wrap gap-2">
+          <button
+            (click)="goToPreviousPage()"
+            [disabled]="currentSelectedPage === 0"
+            class="rounded-lg border px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50">
             Prev
           </button>
           @for (num of visiblePages; track num) {
-          <button (click)="onPageClick(num)" [class]="isPageActive(num) 
-            ? 'px-3 py-1 bg-cyan-500 text-white rounded-lg' 
-            : 'px-3 py-1 border rounded-lg'">
+          <button
+            (click)="onPageClick(num)"
+            [class]="isPageActive(num)
+              ? 'px-3 py-1 bg-cyan-500 text-white rounded-lg'
+              : 'px-3 py-1 border rounded-lg'">
             {{ num + 1 }}
           </button>
           }
-          <button (click)="goToNextPage()" [disabled]="currentSelectedPage >= NoOfPages.length - 1"
-            class="px-3 py-1 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+          <button
+            (click)="goToNextPage()"
+            [disabled]="currentSelectedPage >= NoOfPages.length - 1"
+            class="rounded-lg border px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50">
             Next
           </button>
         </div>
