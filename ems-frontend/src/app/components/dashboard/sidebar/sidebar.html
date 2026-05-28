@@ -1,0 +1,47 @@
+<aside
+  class="min-h-screen bg-white/70 backdrop-blur-xl border-r border-slate-200 transition-all duration-200"
+  [class.w-64]="!isCollapsed"
+  [class.w-20]="isCollapsed"
+  [class.p-5]="!isCollapsed"
+  [class.p-4]="isCollapsed">
+
+    <!-- Logo -->
+    <div class="flex items-center gap-3 mb-8" [class.justify-center]="isCollapsed">
+      @if (!isCollapsed) {
+        <div class="w-10 h-10 shrink-0 flex items-center justify-center rounded-xl bg-cyan-500 text-white font-bold">
+        E
+      </div>
+    }
+      @if (!isCollapsed) {
+        <h2 class="text-lg font-semibold flex-1 whitespace-nowrap">EMS Admin</h2>
+      }
+
+      <button
+        type="button"
+        (click)="toggleSidebar.emit()"
+        class="w-9 h-9 shrink-0 flex items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+        [attr.aria-label]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+
+    <!-- Menu -->
+    <nav class="space-y-2 text-sm">
+      @for (item of menuItems; track item.label) {
+        <a
+          class="flex items-center gap-3 rounded-lg px-3 py-2 font-medium transition-colors"
+          [class.justify-center]="isCollapsed"
+          [class.bg-cyan-100]="item.active"
+          [class.text-cyan-600]="item.active"
+          [class.hover:bg-slate-100]="!item.active"
+          [title]="isCollapsed ? item.label : ''">
+          <mat-icon class="shrink-0">{{ item.icon }}</mat-icon>
+
+          @if (!isCollapsed) {
+            <span class="whitespace-nowrap">{{ item.label }}</span>
+          }
+        </a>
+      }
+    </nav>
+
+  </aside>
