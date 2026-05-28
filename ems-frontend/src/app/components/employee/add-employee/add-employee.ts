@@ -61,7 +61,7 @@ export class AddEmployee  implements OnInit{
   });   
 
   onCancel(): void {
-    this.dialogRef.close('Closed');
+    this.dialogRef.close();
   }
 
   onSubmit(){

@@ -220,6 +220,10 @@ get PageEnd(): number{
   return Math.min(this.Start + this.PAGE_SIZE, this.TotalEmployee);
 }
 
+isEmployeeResponse(value: unknown): value is Employee {
+  return !!value && typeof value === 'object' && 'name' in value && 'email' in value;
+}
+
 
 signOut(event:any){
  this.authService.logout();
@@ -233,7 +237,7 @@ addEmployee(){
   })
   
   dialog.afterClosed().subscribe((res: Employee) =>{
-    if (!res) return;
+    if (!this.isEmployeeResponse(res)) return;
 
     // add new employee at top
     this.employees.unshift(res);
@@ -290,7 +294,7 @@ onEditClicked(id: number | undefined){
     debugger
     console.log(updatedEmployee)
      // if dialog closed without save
-    if (!updatedEmployee) return;
+    if (!this.isEmployeeResponse(updatedEmployee)) return;
 
     let index = this.employees.findIndex((emp) => emp.id === updatedEmployee.id);
 
