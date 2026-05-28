@@ -13,10 +13,11 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddEmployee } from '../employee/add-employee/add-employee';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { Sidebar } from "./sidebar/sidebar";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule,MatIconModule, ReactiveFormsModule, UserAvatar, MatDialogModule, MatButtonModule],
+  imports: [CommonModule, MatIconModule, ReactiveFormsModule, UserAvatar, MatDialogModule, MatButtonModule, Sidebar],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
   standalone: true
@@ -25,6 +26,7 @@ export class Dashboard implements OnInit {
   employees: Employee[] = [];
   employeeService = inject(EmployeeService);
   toaster = inject(ToastrService);
+  isSidebarCollapsed = false;
 
   
   //Pagination section 
@@ -64,6 +66,10 @@ export class Dashboard implements OnInit {
 
   
 
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed;
   }
 
   get user(){
