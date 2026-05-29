@@ -15,7 +15,7 @@
         <h1 class="text-xl font-semibold text-slate-800 sm:text-2xl">Employees</h1>
 
         <div class="lg:hidden">
-          <app-user-avatar [user]="user" (signOut)="signOut($event)"></app-user-avatar>
+          <app-user-avatar (signOut)="signOut($event)"></app-user-avatar>
         </div>
       </div>
 
@@ -33,7 +33,7 @@
             + Add Employee
           </button>
           <div class="hidden lg:block">
-            <app-user-avatar [user]="user" (signOut)="signOut($event)"></app-user-avatar>
+            <app-user-avatar (signOut)="signOut($event)"></app-user-avatar>
           </div>
         </div>
       </div>
