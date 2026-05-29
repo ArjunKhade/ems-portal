@@ -1,8 +1,11 @@
-import { Component, computed, input, Input, output } from '@angular/core';
+import { Component, computed, inject, input, Input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { User } from './user.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { select, Store } from '@ngrx/store';
+import { selectUser } from '../../store/selectors/user.selector';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-user-avatar',
@@ -12,9 +15,17 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
 })
 export class UserAvatar {
-  user = input.required<string | null>();
+  // user = input.required<string | null>();
   signOut = output<void>();
   isPopoverOpen = false;
+
+  private store = inject(Store);
+  // user$ = this.store.pipe(select(selectUser));
+
+  user = toSignal(
+  this.store.pipe(select(selectUser)),
+  { initialValue: '' }
+);
 
   initials = computed(() => {
     const user = this.user();
