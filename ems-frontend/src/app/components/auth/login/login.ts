@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { ErrorResponse, UserLoginRequest } from './login.model';
 import { AuthService } from '../auth-service';
 import { ToastrService } from 'ngx-toastr';
+import { Store } from '@ngrx/store';
+import * as UserActions from '../../../store/actions/user.actions';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +29,8 @@ import { ToastrService } from 'ngx-toastr';
 export class Login {
   hide = true;
   toastr = inject(ToastrService);
+
+  private store = inject(Store);
 
   constructor(private authService: AuthService, private router: Router){
 
@@ -55,6 +59,11 @@ export class Login {
           try{
            sessionStorage.setItem("AuthToken", response.token);
            sessionStorage.setItem("User", response.name);
+           this.store.dispatch(
+            UserActions.loadUserSuccess({
+              user: response.name,
+            })
+          );
           }catch{
           this.toastr.error("Error while storing session.", 'Error');
           }
