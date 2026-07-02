@@ -291,7 +291,7 @@ onEditClicked(id: number | undefined){
   });
 
   dialog.afterClosed().subscribe((updatedEmployee: Employee) =>{
-    debugger
+    
     console.log(updatedEmployee)
      // if dialog closed without save
     if (!this.isEmployeeResponse(updatedEmployee)) return;
