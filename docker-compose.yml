@@ -1,0 +1,36 @@
+#version: "3"  # Optional, safe to remove with Compose v2+
+
+services:
+  ems-backend:
+    container_name: ems-backend
+    image: ems-backend
+    build: ./ems-backend/
+    restart: always
+    ports:
+      - "9090:9090"   # changed host port from 9090 to 8080 to avoid conflict with frontend
+    environment:
+      MYSQL_HOST: ems-mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+    depends_on:
+      - ems-mysqldb
+
+  ems-mysqldb:
+    container_name: ems-mysqldb
+    image: ems-database
+    build: ./ems-database/
+    environment:
+      MYSQL_DATABASE: ems
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+
+  ems-frontend:
+    container_name: ems-frontend
+    image: ems-frontend
+    build: ./ems-frontend/
+    ports:
+      - "90:80"
+    depends_on:
+      - ems-backend

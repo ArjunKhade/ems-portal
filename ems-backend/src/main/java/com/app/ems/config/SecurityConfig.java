@@ -36,7 +36,7 @@ public class SecurityConfig {
 					.csrf(customizer -> customizer.disable())
 					 .cors(Customizer.withDefaults()) 
 					.authorizeHttpRequests(request -> request
-							 .requestMatchers("/auth/**", "/swagger*/**", "/v*/api-docs/**").permitAll()
+							 .requestMatchers("/api/auth/**",  "/swagger-ui/**", "/swagger-ui.html", "/v*/api-docs/**").permitAll()
 							 .anyRequest().authenticated())
 					.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 					//Add JWT filter before the UsernamePasswordAuthenticationFilter here needed
