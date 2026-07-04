@@ -24,7 +24,7 @@ pipeline {
 
         stage('Wait for Application') {
             steps {
-                bat 'timeout /t 30'
+                sleep(time: 30, unit: 'SECONDS')
             }
         }
 
