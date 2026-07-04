@@ -1,5 +1,3 @@
-#version: "3"  # Optional, safe to remove with Compose v2+
-
 services:
   ems-backend:
     container_name: ems-backend
