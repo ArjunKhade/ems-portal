@@ -1,5 +1,4 @@
-import { expect } from "@playwright/test";
-import test from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
 //Run test cases serially
 test.describe.serial("User Authentication", () => {
