@@ -1,12 +1,16 @@
-import { test , expect } from "@playwright/test";
+import { test, expect } from "@playwright/test";
+import { LoginPage } from "../../Pages/loginPage";
 
-// test('login test', async ({ page }) => {
-//     await page.goto("http://localhost:90/login");
-//     await page.locator('[formcontrolname="email"]').fill("monika1@gmail.com");
-//     await page.locator('[formcontrolname="password"]').fill("Monika@123");
-//     await page.getByRole('button', { name: 'Sign In' }).click();
-//     await expect(page).toHaveURL('http://localhost:90/dashboard');
-// })
+test.describe("Login tests", () => {
+    test("Valid login navigates to dashboard", async ({ page }) => {
+        const loginPage = new LoginPage(page);
+        await loginPage.login("monika1@gmail.com", "Monika@123");
+        await expect(page).toHaveURL('/dashboard');
+    });
 
-
-
+    test("Invalid login gives error message", async ({ page }) => {
+        const loginPage = new LoginPage(page);
+        await loginPage.login("monika12@gmail.com", "Monika@123");
+        await expect(loginPage.errorMessage).toBeVisible();
+    });
+})
