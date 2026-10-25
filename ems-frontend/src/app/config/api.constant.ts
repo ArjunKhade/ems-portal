@@ -8,4 +8,7 @@ export const API = {
     DELETE_EMPLOYEE: (empId: number) => `${BASE_URL}/employees/${empId}`,
     CREATE_EMPLOYEE: BASE_URL+'/employees',
     UPDATE_EMPLOYEE: (empId: number) => `${BASE_URL}/employees/${empId}`,
+    UPLOAD_FILE: BASE_URL + '/files/upload',
+    VIEW_FILE: (fileName: string) => `${BASE_URL}/files/view/${fileName}`,
+    DOWNLOAD_FILE: (fileName: string) => `${BASE_URL}/files/download/${fileName}`,
 } 

@@ -347,4 +347,27 @@ onDeleteClicked(id: number | undefined){
  }
 }
 
+getProfileImageUrl(fileName?: string): string {
+  return this.employeeService.getProfileImageUrl(fileName);
 }
+
+getInitials(name?: string): string {
+  if (!name) return 'EM';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+onImageError(event: Event): void {
+  const img = event.target as HTMLImageElement;
+  if (img) {
+    img.style.display = 'none';
+    const fallback = img.nextElementSibling as HTMLElement;
+    if (fallback) {
+      fallback.style.display = 'flex';
+    }
+  }
+}
+
+}
+

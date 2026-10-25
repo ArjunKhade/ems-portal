@@ -1,5 +1,5 @@
 <aside
-  class="min-h-screen bg-white/70 backdrop-blur-xl border-r border-slate-200 transition-all duration-200"
+  class="min-h-screen bg-white/70 backdrop-blur-xl border-r border-slate-200 transition-all duration-200 flex flex-col"
   [ngClass]="isCollapsed ? 'w-14 p-2 sm:w-16 sm:p-3 lg:w-20 lg:p-4' : 'w-14 p-2 sm:w-16 sm:p-3 lg:w-64 lg:p-5'">
 
     <!-- Logo -->
@@ -26,22 +26,51 @@
     </div>
 
     <!-- Menu -->
-    <nav class="space-y-2 text-sm">
-      @for (item of menuItems; track item.label) {
-        <a
-          class="flex items-center justify-center gap-3 rounded-lg px-2 py-2 font-medium transition-colors sm:px-3 lg:justify-start"
-          [ngClass]="{'lg:justify-center': isCollapsed}"
-          [class.bg-cyan-100]="item.active"
-          [class.text-cyan-600]="item.active"
-          [class.hover:bg-slate-100]="!item.active"
+    <nav class="flex-1 space-y-1 text-sm">
+
+      <!-- Main menu items (all except last How To Use) -->
+      @for (item of menuItems.slice(0, menuItems.length - 1); track item.label) {
+        <button
+          type="button"
+          (click)="navigate(item)"
+          class="w-full flex items-center justify-center gap-3 rounded-lg px-2 py-2 font-medium transition-colors sm:px-3 lg:justify-start"
+          [ngClass]="{
+            'lg:justify-center': isCollapsed,
+            'bg-cyan-100 text-cyan-600': isActive(item),
+            'text-slate-600 hover:bg-slate-100': !isActive(item)
+          }"
           [title]="item.label">
           <mat-icon class="shrink-0 scale-90 sm:scale-100">{{ item.icon }}</mat-icon>
 
           @if (!isCollapsed) {
             <span class="hidden whitespace-nowrap lg:inline">{{ item.label }}</span>
           }
-        </a>
+        </button>
       }
+
+      <!-- Divider before How To Use -->
+      <div class="my-3 border-t border-slate-200"></div>
+
+      <!-- How To Use - last item -->
+      <button
+        type="button"
+        (click)="navigate(menuItems[menuItems.length - 1])"
+        class="w-full flex items-center justify-center gap-3 rounded-lg px-2 py-2 font-medium transition-colors sm:px-3 lg:justify-start group"
+        [ngClass]="{
+          'lg:justify-center': isCollapsed,
+          'bg-cyan-100 text-cyan-600': isActive(menuItems[menuItems.length - 1]),
+          'text-slate-600 hover:bg-slate-100': !isActive(menuItems[menuItems.length - 1])
+        }"
+        [title]="menuItems[menuItems.length - 1].label">
+        <mat-icon class="shrink-0 scale-90 sm:scale-100 text-cyan-500 group-hover:text-cyan-600 transition-colors">
+          {{ menuItems[menuItems.length - 1].icon }}
+        </mat-icon>
+
+        @if (!isCollapsed) {
+          <span class="hidden whitespace-nowrap lg:inline">{{ menuItems[menuItems.length - 1].label }}</span>
+        }
+      </button>
+
     </nav>
 
-  </aside>
+</aside>

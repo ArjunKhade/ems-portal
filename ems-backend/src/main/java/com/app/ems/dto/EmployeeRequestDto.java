@@ -47,5 +47,6 @@ public class EmployeeRequestDto {
 	@Min(value = 18, message = "Age must be atleast 18")
 	private int age;
 	
+	private String profileImage;
 	
 }

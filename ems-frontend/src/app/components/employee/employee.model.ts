@@ -11,9 +11,17 @@ export class Employee {
   salary: number = 0;
   age: number = 0;
   status: string = '';
+  profileImage?: string = '';
 }
 
 export interface ApiResponse {
   timeStamp: string;
   message: string;
+}
+
+export interface FileUploadResponse {
+  fileName: string;
+  fileUrl: string;
+  fileType: string;
+  size: number;
 }

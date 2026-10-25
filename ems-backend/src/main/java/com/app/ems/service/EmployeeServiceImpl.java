@@ -64,6 +64,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		employee.setPhone(request.getPhone());
 		employee.setPosition(request.getPosition());
 		employee.setSalary(request.getSalary());
+		employee.setProfileImage(request.getProfileImage());
 		//save employee
 		Employee savedEmployee = empRepo.save(employee);
 		

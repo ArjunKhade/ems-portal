@@ -13,9 +13,13 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () => import('./components/dashboard/dashboard').then((m) => m.Dashboard),
-     resolve: {
+    resolve: {
       employees: employeeResolver
     }
+  },
+  {
+    path: 'how-to-use',
+    loadComponent: () => import('./components/how-to-use/how-to-use').then((m) => m.HowToUse),
   },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];

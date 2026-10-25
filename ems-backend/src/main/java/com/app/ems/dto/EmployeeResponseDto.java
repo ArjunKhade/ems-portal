@@ -30,5 +30,7 @@ public class EmployeeResponseDto extends BaseDto {
     private int age;
     
     private String status;
+    
+    private String profileImage;
 	
 }

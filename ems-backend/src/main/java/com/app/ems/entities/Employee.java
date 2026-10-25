@@ -34,6 +34,8 @@ public class Employee extends BaseEntity {
     private double salary;
 
     private int age;
-	
+
 	private String status = "Active";
+
+	private String profileImage;
 }
