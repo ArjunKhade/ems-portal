@@ -2,8 +2,8 @@
 import { ResolveFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { catchError, lastValueFrom, of } from 'rxjs';
-import { EmployeeService } from '../employee/employee.service';
-import { Employee } from '../employee/employee.model';
+import { EmployeeService } from '../../components/employee/employee.service';
+import { Employee } from '../../components/employee/employee.model';
 
 export const employeeResolver: ResolveFn<Employee[]> = () => {
   const employeeService = inject(EmployeeService);
